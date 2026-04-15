@@ -1,0 +1,51 @@
+POST http://localhost:5000/register 
+content-type: application/json
+
+{
+    "email": "vraj@gmail.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:5000/login
+content-type: application/json
+
+{
+    "email": "vraj@gmail.com",
+    "password": "123456"
+}
+
+###
+GET http://localhost:5000/users
+
+
+###
+POST http://localhost:5000/addBookmark
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZGY3ZmJmYWRmYjZlMzRjNmI2NDNjMSIsImlhdCI6MTc3NjI1NTA3NywiZXhwIjoxNzc2MjU4Njc3fQ.ShV1IjNbgLTrWXNJUFSZvvgbHPB_PrbddpIiyfwQyE8
+
+{
+    "userId":"69df80daadfb6e34c6b643c4",
+    "url": "http://www.jiohotstar.com",
+    "domain": ".com",
+    "title":"JioHotstar",
+    "description":"This is the JioHotstar domain",
+    "tags":"pqr"
+}
+
+###
+GET http://localhost:5000/getBookmarkById/69df484611c49b47e6ffec13
+
+###
+GET http://localhost:5000/getBookmark?search=Book
+
+###
+DELETE http://localhost:5000/delBookmark/69df484611c49b47e6ffec13
+
+###
+POST http://localhost:5000/addBookmark
+Content-Type: application/json
+
+{
+    "url": "https://www.opashsoftware.com/"
+}
