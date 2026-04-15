@@ -14,7 +14,7 @@ const Dashboard = () => {
     userId: "",
     url: "",
   });
-  const [book, setBook] = useState<any[]>([]);
+
 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -22,32 +22,32 @@ const Dashboard = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
 
-    try {
-      for (let item of book) {
-        const token = localStorage.getItem("token");
-        const res = await axios.post(
-          `http://localhost:5000/addBookmark`,
-          {
-            userId: item._id,
-          },
-          {
-            headers: {
-              Authorization: `Bearear ${token}`,
-            },
-          },
-        );
-        console.log(res);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  try {
+    const token = localStorage.getItem("token");
+    
+
+    const res = await axios.post(
+      `http://localhost:5000/addBookmark`,
+      data, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-      
-    //   alert("Bookmark Created Successfully");
-// navigate("/DispBookmark");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    );
+
+    console.log("Success:", res.data);
+    alert("Bookmark Created Successfully");
+    navigate("/DispBookmark");
+  } catch (error) {
+    console.error("Error adding bookmark:", error);
+  }
+};
+
   return (
     <>
       <center>

@@ -2,19 +2,22 @@ import { Request, Response } from "express";
 import { createBookmark, deleteBookmark, getBookmark, getBookmarkById} from "../services/bookmark.service";
 
 
+
 export const create = async (req: Request, res: Response) => {
   try {
-    console.log("hjsdhfs")
-    const {url} = req.body;
-    console.log(url)
+    const { url } = req.body;
+    if (!url) {
+      return res.status(400).json({ message: "URL is required" });
+    }
+
     const bookmark = await createBookmark(url);
-    res.json(bookmark);
+    res.status(201).json(bookmark); 
   } catch (error) {
-    console.log(error);
-    res.json({ message: "Record not inserted" });
+    console.error("Controller Error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-  
 };
+
 
 export const readById = async (req: Request, res: Response) => {
   try {
