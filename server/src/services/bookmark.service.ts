@@ -1,11 +1,9 @@
 import { BookmarkModel } from "../models/bookmark.model";
 import urlMetadata from "url-metadata";
 
-
-
 export const createBookmark = async (url: string) => {
   try {
-    const validUrl = url.startsWith('http') ? url : `https://${url}`;
+    const validUrl = url.startsWith("http") ? url : `https://${url}`;
     const domain = new URL(validUrl).hostname;
 
     let metadata: any = {};
@@ -15,17 +13,20 @@ export const createBookmark = async (url: string) => {
       console.log("Metadata fetch failed, creating basic bookmark:", metaErr);
     }
 
-    const title = metadata.title || 'Untitled';
-    const description = metadata.description || '';
-    const tags = metadata.keywords || '';
+    const title = metadata.title || "Untitled";
+    const description = metadata.description || "";
+    const rawTags = metadata.keywords || "";
+    const tags = rawTags ? rawTags.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+    const image =
+      metadata.image || metadata["og:image"] || metadata["twitter:image"] || "";
 
-   
     return await BookmarkModel.create({
-      url: validUrl, 
-      domain, 
-      title, 
-      description, 
-      tags 
+      url: validUrl,
+      domain,
+      title,
+      description,
+      tags,
+      image,
     });
   } catch (err: any) {
     console.error("Database or URL Error:", err);
@@ -33,17 +34,16 @@ export const createBookmark = async (url: string) => {
   }
 };
 
-
 export const getBookmarkById = async (id: string) => {
   return await BookmarkModel.findById(id).populate("userId");
 };
 
-export const getBookmark = async (search:string) => {
+export const getBookmark = async (search: string) => {
   const query = search ? { title: { $regex: search, $options: "i" } } : {};
-  const bookmark=await BookmarkModel.find(query)
+  const bookmark = await BookmarkModel.find(query);
   return bookmark;
 };
 
-export const deleteBookmark=async(id:string)=>{
-    return await BookmarkModel.findByIdAndDelete(id);
-}
+export const deleteBookmark = async (id: string) => {
+  return await BookmarkModel.findByIdAndDelete(id);
+};

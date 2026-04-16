@@ -7,7 +7,7 @@ export interface IBookmark extends Document {
   title: string;
   description: string;
   image: string;
-  tags: string;
+  tags: string[];
 }
 
 const BookmarkSchema: Schema<IBookmark> = new Schema<IBookmark>(
@@ -30,15 +30,15 @@ const BookmarkSchema: Schema<IBookmark> = new Schema<IBookmark>(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
-    // image: {
-    //   type: String,
-    //   required: true,
-    // },
-    tags: {
+    image: {
       type: String,
       required: false,
+    },
+   tags: {
+      type: [String],
+      default: [], 
     },
   },
   {

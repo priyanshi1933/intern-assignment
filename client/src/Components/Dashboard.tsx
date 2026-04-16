@@ -1,5 +1,7 @@
 import React, { useState, type ChangeEvent } from "react";
+import './style.css'
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 import axios from "axios";
 interface IBookmark {
   userId: string;
@@ -48,41 +50,45 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 };
 
+  
+
   return (
     <>
-      <center>
-        <div className="container mt-5">
-          <form method="post" className="add" onSubmit={handleSubmit}>
-            <center>
-              <h1 className="mt-5">Add Bookmark</h1>
-              <div className="container mt-5">
-                <input
-                  type="text"
-                  id="url"
-                  name="url"
-                  value={data.url}
-                  placeholder="Enter Your URL"
-                  onChange={handleChange}
-                  className="form-control mt-3"
-                  style={{ width: "500px" }}
-                />
-
-               
-
-                <button
-                  type="submit"
-                  className="btn btn-primary mt-3"
-                  style={{ width: "500px" }}
-                >
-                  Add BookMark
-                </button>
-              </div>
-            </center>
-          </form>
+    <Navbar/>
+  <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div className="card shadow-lg border-0 p-5" style={{ maxWidth: "600px", width: "100%", borderRadius: "20px" }}>
+      <form method="post" className="add" onSubmit={handleSubmit}>
+        <div className="text-center mb-4">
+        
+          <h1 className="fw-bold text-dark">URL Metadata Fetcher</h1>
+          <p className="text-muted">Enter a link below to extract titles, images, and descriptions.</p>
         </div>
-      </center>
-    </>
-  );
+
+        <div className="form-group">
+          <label htmlFor="url" className="form-label fw-semibold ps-1">Website URL</label>
+          <input
+            type="text"
+            id="url"
+            name="url"
+            value={data.url}
+            placeholder="https://example.com"
+            onChange={handleChange}
+            className="form-control form-control-lg custom-input"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-primary btn-lg w-100 mt-4 py-3 fw-bold shadow-sm fetch-btn"
+        >
+          Fetch Metadata
+        </button>
+      </form>
+    </div>
+  </div>
+  </>
+);
+
 };
 
 export default Dashboard;

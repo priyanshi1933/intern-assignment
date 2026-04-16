@@ -13,7 +13,7 @@ function App() {
 useEffect(()=>{
   const token=getToken();
   if(!token){
-    navigate('/login');
+    navigate('/');
   }
 
 },[])
@@ -24,7 +24,7 @@ useEffect(()=>{
         <Route>
           
           <Route path='/register' element={<Register/>}></Route>
-          <Route path='/login' element={<Login/>}></Route>
+          <Route path='/' element={<Login/>}></Route>
            <Route path='/dashboard' element={<Dashboard/>}></Route>
            <Route path='/DispBookmark' element={<DispBookmark/>}></Route>
         </Route>
